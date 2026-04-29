@@ -4,13 +4,36 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Phone, Mail } from "lucide-react";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <header className="fixed top-0 w-full bg-white shadow-md z-50">
-      <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
+      {/* Top Bar - Phone & Email */}
+      <div className="bg-blue-600 text-white py-1 px-4">
+        <div className="container mx-auto flex flex-nowrap justify-center md:justify-end items-center gap-3 sm:gap-6 text-xs sm:text-sm overflow-x-auto">
+          <a
+            href="tel:+27604243676"
+            className="flex items-center gap-1 sm:gap-2 hover:text-blue-100 transition-colors whitespace-nowrap"
+          >
+            <Phone className="w-4 h-4" />
+            <span>+27 60 424 3676</span>
+          </a>
+
+          <a
+            href="mailto:info@cinematicsystems.com"
+            className="flex items-center gap-1 sm:gap-2 hover:text-blue-100 transition-colors whitespace-nowrap"
+          >
+            <Mail className="w-4 h-4" />
+            <span>info@cinematicsystems.com</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Main Navigation */}
+      <nav className="container mx-auto px-4 py-1 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
           <div className="relative w-10 h-10">
@@ -132,6 +155,24 @@ const Header = () => {
             >
               Get Quote
             </Link>
+
+            {/* Mobile Contact Info */}
+            <div className="pt-4 mt-2 border-t border-gray-200 w-full">
+              <a
+                href="tel:+1234567890"
+                className="flex items-center justify-center gap-2 text-gray-600 hover:text-blue-600 transition py-2"
+              >
+                <Phone className="w-4 h-4" />
+                <span>+1 (234) 567-890</span>
+              </a>
+              <a
+                href="mailto:info@cinematicsystems.com"
+                className="flex items-center justify-center gap-2 text-gray-600 hover:text-blue-600 transition py-2"
+              >
+                <Mail className="w-4 h-4" />
+                <span>info@cinematicsystems.com</span>
+              </a>
+            </div>
           </div>
         </div>
       )}

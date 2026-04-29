@@ -157,7 +157,7 @@ const Header = () => {
             </Link>
 
             {/* Mobile Contact Info */}
-            <div className="pt-4 mt-2 border-t border-gray-200 w-full">
+            {/* <div className="pt-4 mt-2 border-t border-gray-200 w-full">
               <a
                 href="tel:+1234567890"
                 className="flex items-center justify-center gap-2 text-gray-600 hover:text-blue-600 transition py-2"
@@ -172,7 +172,7 @@ const Header = () => {
                 <Mail className="w-4 h-4" />
                 <span>info@cinematicsystems.com</span>
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       )}

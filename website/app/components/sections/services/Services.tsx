@@ -1,131 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
-
-const allServices = [
-  {
-    id: 1,
-    name: "DSTv Installation & Repairs",
-    description:
-      "Professional installation and troubleshooting for all DSTV systems.",
-    icon: "🔧",
-    category: "installation",
-  },
-  {
-    id: 2,
-    name: "Home Theatre Systems",
-    description:
-      "Custom home theatre design and installation for immersive experiences.",
-    icon: "🎬",
-    category: "entertainment",
-  },
-  {
-    id: 3,
-    name: "Multiroom Sound Systems",
-    description: "High quality sound in every room of your home or office.",
-    icon: "🔊",
-    category: "audio",
-  },
-  {
-    id: 4,
-    name: "WiFi Access Points",
-    description:
-      "Improve your network coverage and speed with professional setup.",
-    icon: "📶",
-    category: "network",
-  },
-  {
-    id: 5,
-    name: "HDMI Matrix Setup",
-    description: "Seamless distribution of HDMI signals to multiple displays.",
-    icon: "🎮",
-    category: "installation",
-  },
-  {
-    id: 6,
-    name: "HDMI Extensions over CAT Cable",
-    description: "Reliable HDMI signal transmission over long distances.",
-    icon: "🔌",
-    category: "installation",
-  },
-  {
-    id: 7,
-    name: "TV Wall Mounting",
-    description: "Safe and secure TV wall mounting for any size television.",
-    icon: "📺",
-    category: "installation",
-  },
-  {
-    id: 8,
-    name: "Network Cabling",
-    description:
-      "Professional and neat network cabling for optimal performance.",
-    icon: "🌐",
-    category: "network",
-  },
-  {
-    id: 9,
-    name: "High-End HiFi Systems Setup",
-    description: "Premium sound systems for audiophiles and enthusiasts.",
-    icon: "🎵",
-    category: "audio",
-  },
-  {
-    id: 10,
-    name: "Projector Mounting & Setup",
-    description: "Perfect setup for the best viewing experience.",
-    icon: "📽️",
-    category: "entertainment",
-  },
-  {
-    id: 11,
-    name: "CCTV (IP/WiFi & Analogue)",
-    description: "Advanced security solutions for your property protection.",
-    icon: "📹",
-    category: "security",
-  },
-  {
-    id: 12,
-    name: "Ceiling Speakers Installation",
-    description: "Clean and efficient audio system installation.",
-    icon: "🔊",
-    category: "audio",
-  },
-  {
-    id: 13,
-    name: "Intercoms",
-    description:
-      "Modern intercom systems for secure and convenient communication.",
-    icon: "📞",
-    category: "security",
-  },
-  {
-    id: 14,
-    name: "Access Control",
-    description:
-      "Advanced access control systems to manage and monitor entry points.",
-    icon: "🚪",
-    category: "security",
-  },
-  {
-    id: 15,
-    name: "Bio Metrix",
-    description:
-      "Biometric security solutions for enhanced authentication and access management.",
-    icon: "👆",
-    category: "security",
-  },
-];
-
-const categories = [
-  { key: "all", label: "All" },
-  { key: "installation", label: "Installation" },
-  { key: "entertainment", label: "Entertainment" },
-  { key: "audio", label: "Audio" },
-  { key: "network", label: "Network" },
-  { key: "security", label: "Security" },
-];
 
 const stats = [
   { value: "15+", label: "Professional Services" },
@@ -150,12 +26,68 @@ const itemVariants: Variants = {
 };
 
 const Services = () => {
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/services`,
+      );
+      const data = await response.json();
+      // Filter only active services
+      setServices(data.filter((s: any) => s.status === "Active"));
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get unique categories from fetched services
+  const categories = [
+    { key: "all", label: "All" },
+    ...Array.from(new Set(services.map((s: any) => s.category)))
+      .filter(Boolean)
+      .map((cat) => ({
+        key: cat,
+        label: cat.charAt(0).toUpperCase() + cat.slice(1),
+      })),
+  ];
 
   const filteredServices =
     activeCategory === "all"
-      ? allServices
-      : allServices.filter((s) => s.category === activeCategory);
+      ? services
+      : services.filter((s: any) => s.category === activeCategory);
+
+  if (loading) {
+    return (
+      <section className="py-16 md:py-24 bg-gray-50 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (services.length === 0) {
+    return (
+      <section className="py-16 md:py-24 bg-gray-50 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center text-gray-500">
+            No services available.
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -220,9 +152,9 @@ const Services = () => {
             animate="visible"
             exit="hidden"
           >
-            {filteredServices.map(({ id, name, description, icon }) => (
+            {filteredServices.map((service: any) => (
               <motion.div
-                key={id}
+                key={service._id}
                 variants={itemVariants}
                 className="group flex items-start gap-3 md:gap-4 bg-white rounded-xl md:rounded-2xl p-4 md:p-5 border border-gray-100
                            hover:border-blue-200 hover:shadow-[0_8px_24px_rgba(21,101,192,0.10)] transition-all duration-300 cursor-pointer"
@@ -232,15 +164,15 @@ const Services = () => {
                                 group-hover:bg-blue-700 group-hover:border-blue-700 group-hover:shadow-[0_4px_14px_rgba(21,101,192,0.35)] transition-all duration-300"
                 >
                   <span className="text-base md:text-xl group-hover:scale-110 transition-transform duration-300 leading-none">
-                    {icon}
+                    {service.icon || "🔧"}
                   </span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-sm md:text-base font-bold text-gray-900 leading-snug mb-1 group-hover:text-blue-700 transition-colors duration-200">
-                    {name}
+                    {service.name}
                   </h3>
                   <p className="text-xs text-gray-500 leading-relaxed line-clamp-2 md:line-clamp-none">
-                    {description}
+                    {service.description}
                   </p>
                 </div>
               </motion.div>

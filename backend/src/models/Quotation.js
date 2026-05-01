@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const quotationItemSchema = new mongoose.Schema({
   description: {
     type: String,
-    required: true,
   },
   quantity: {
     type: Number,
@@ -24,8 +23,8 @@ const quotationItemSchema = new mongoose.Schema({
 const quotationSchema = new mongoose.Schema({
   quotationNo: {
     type: String,
-    required: true,
-    unique: true,
+    unique: true, // ✅ keep uniqueness
+    // ❌ removed required: true
   },
   date: {
     type: Date,

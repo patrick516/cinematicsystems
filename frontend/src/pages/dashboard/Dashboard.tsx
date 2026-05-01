@@ -3,7 +3,7 @@ import {
   Package,
   MessageSquare,
   Wrench,
-  Eye,
+  BarChart2,
   PlusCircle,
   Mail,
   Settings,
@@ -11,6 +11,7 @@ import {
   Inbox,
   CheckCircle,
   Clock,
+  ChevronRight,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import api from "../../lib/api";
@@ -54,31 +55,45 @@ const Dashboard: React.FC = () => {
       title: "Total Products",
       value: stats.totalProducts,
       icon: Package,
-      color: "bg-blue-500",
-      bgColor: "bg-blue-50",
-      textColor: "text-blue-600",
+      iconBg: "#dbeafe",
+      iconColor: "#2563eb",
+      cardAccent: "#2563eb",
       link: "/products",
       linkText: "View all products",
+      linkColor: "#2563eb",
     },
     {
       title: "Total Messages",
       value: stats.totalMessages,
       icon: MessageSquare,
-      color: "bg-green-500",
-      bgColor: "bg-green-50",
-      textColor: "text-green-600",
+      iconBg: "#dcfce7",
+      iconColor: "#16a34a",
+      cardAccent: "#16a34a",
       link: "/messages",
       linkText: "View all messages",
+      linkColor: "#16a34a",
     },
     {
       title: "Total Services",
       value: stats.totalServices,
       icon: Wrench,
-      color: "bg-purple-500",
-      bgColor: "bg-purple-50",
-      textColor: "text-purple-600",
+      iconBg: "#ede9fe",
+      iconColor: "#7c3aed",
+      cardAccent: "#7c3aed",
       link: "/services",
       linkText: "View all services",
+      linkColor: "#7c3aed",
+    },
+    {
+      title: "Website Visits",
+      value: "1,245",
+      icon: BarChart2,
+      iconBg: "#ffedd5",
+      iconColor: "#ea580c",
+      cardAccent: "#ea580c",
+      link: "#",
+      linkText: "View analytics",
+      linkColor: "#ea580c",
     },
   ];
 
@@ -87,41 +102,40 @@ const Dashboard: React.FC = () => {
       title: "Add New Product",
       description: "Add a new product to catalog",
       icon: PlusCircle,
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
-      action: () => navigate("/products"), // Navigate to products page and open modal
+      iconBg: "#dbeafe",
+      iconColor: "#2563eb",
+      action: () => navigate("/products"),
     },
     {
       title: "Add New Service",
       description: "Add a new service",
       icon: Wrench,
-      color: "text-purple-600",
-      bgColor: "bg-purple-50",
-      action: () => navigate("/services"), // Navigate to services page and open modal
+      iconBg: "#dcfce7",
+      iconColor: "#16a34a",
+      action: () => navigate("/services"),
     },
     {
       title: "View Messages",
       description: "Check all customer messages",
       icon: Mail,
-      color: "text-green-600",
-      bgColor: "bg-green-50",
+      iconBg: "#ede9fe",
+      iconColor: "#7c3aed",
       action: () => navigate("/messages"),
     },
     {
       title: "Visit Website",
       description: "Open your website",
       icon: ExternalLink,
-      color: "text-orange-600",
-      bgColor: "bg-orange-50",
+      iconBg: "#ffedd5",
+      iconColor: "#ea580c",
       action: () => window.open("http://localhost:3000", "_blank"),
-      external: true,
     },
     {
       title: "Settings",
       description: "Manage system settings",
       icon: Settings,
-      color: "text-gray-600",
-      bgColor: "bg-gray-50",
+      iconBg: "#f3f4f6",
+      iconColor: "#374151",
       action: () => navigate("/settings"),
     },
   ];
@@ -130,25 +144,37 @@ const Dashboard: React.FC = () => {
     switch (status) {
       case "New":
         return (
-          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-            <Inbox size={12} className="mr-1" /> New
+          <span
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+            style={{ background: "#dcfce7", color: "#15803d" }}
+          >
+            <Inbox size={11} /> New
           </span>
         );
       case "Read":
         return (
-          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-            <CheckCircle size={12} className="mr-1" /> Read
+          <span
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+            style={{ background: "#dbeafe", color: "#1d4ed8" }}
+          >
+            <CheckCircle size={11} /> Read
           </span>
         );
       case "Replied":
         return (
-          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-            <Clock size={12} className="mr-1" /> Replied
+          <span
+            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+            style={{ background: "#ede9fe", color: "#6d28d9" }}
+          >
+            <Clock size={11} /> Replied
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+          <span
+            className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
+            style={{ background: "#f3f4f6", color: "#374151" }}
+          >
             {status}
           </span>
         );
@@ -159,8 +185,13 @@ const Dashboard: React.FC = () => {
     return (
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+          <div
+            className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto"
+            style={{ borderColor: "#2563eb" }}
+          />
+          <p className="mt-4 text-sm" style={{ color: "#6b7280" }}>
+            Loading dashboard...
+          </p>
         </div>
       </div>
     );
@@ -170,81 +201,147 @@ const Dashboard: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
-        <p className="text-gray-500 mt-1">
-          Welcome back! Here's what's happening with your store today.
-        </p>
+        <h1 className="text-2xl font-bold" style={{ color: "#111827" }}>
+          Dashboard
+        </h1>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {statCards.map((stat, index) => (
+      {/* Stat Cards — 4 columns matching mockup */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+        {statCards.map((stat, i) => (
           <div
-            key={index}
-            className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+            key={i}
+            className="rounded-xl p-5 flex items-start gap-4"
+            style={{
+              background: "#fff",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+            }}
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-500 mb-1">{stat.title}</p>
-                <p className="text-3xl font-bold text-gray-800">{stat.value}</p>
-              </div>
-              <div className={`${stat.bgColor} p-3 rounded-xl`}>
-                <stat.icon className={`${stat.textColor}`} size={24} />
-              </div>
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+              style={{ background: stat.iconBg }}
+            >
+              <stat.icon size={22} style={{ color: stat.iconColor }} />
             </div>
-            <div className="mt-4">
+            <div className="flex-1 min-w-0">
+              <p
+                className="text-xs font-medium mb-0.5"
+                style={{ color: "#6b7280" }}
+              >
+                {stat.title}
+              </p>
+              <p
+                className="text-3xl font-bold leading-none"
+                style={{ color: "#111827" }}
+              >
+                {stat.value}
+              </p>
               <a
                 href={stat.link}
-                className={`text-sm ${stat.textColor} hover:underline inline-flex items-center gap-1`}
+                className="inline-flex items-center gap-1 text-xs font-medium mt-2 hover:underline"
+                style={{ color: stat.linkColor }}
               >
-                {stat.linkText} <Eye size={14} />
+                {stat.linkText} <ChevronRight size={12} />
               </a>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Two Column Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Messages */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-800">
+      {/* Middle row: Recent Messages + Quick Actions */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        {/* Recent Messages — 2/3 */}
+        <div
+          className="lg:col-span-2 rounded-xl overflow-hidden"
+          style={{
+            background: "#fff",
+            boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+          }}
+        >
+          <div
+            className="flex items-center justify-between px-6 py-4 border-b"
+            style={{ borderColor: "#f3f4f6" }}
+          >
+            <h2
+              className="font-semibold text-base"
+              style={{ color: "#111827" }}
+            >
               Recent Messages
             </h2>
+            <a
+              href="/messages"
+              className="text-xs font-medium hover:underline"
+              style={{ color: "#2563eb" }}
+            >
+              View all
+            </a>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    NAME
+            <table className="w-full text-sm">
+              <thead>
+                <tr style={{ background: "#f9fafb" }}>
+                  <th
+                    className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide"
+                    style={{ color: "#9ca3af" }}
+                  >
+                    Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    EMAIL
+                  <th
+                    className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide"
+                    style={{ color: "#9ca3af" }}
+                  >
+                    Email
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    SUBJECT
+                  <th
+                    className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide"
+                    style={{ color: "#9ca3af" }}
+                  >
+                    Subject
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    STATUS
+                  <th
+                    className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide"
+                    style={{ color: "#9ca3af" }}
+                  >
+                    Date
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
-                {recentMessages.map((message) => (
-                  <tr key={message._id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm text-gray-900">
-                      {message.name}
+              <tbody>
+                {recentMessages.map((msg) => (
+                  <tr
+                    key={msg._id}
+                    className="border-t hover:bg-gray-50 transition-colors"
+                    style={{ borderColor: "#f3f4f6" }}
+                  >
+                    <td
+                      className="px-6 py-3.5 font-medium"
+                      style={{ color: "#111827" }}
+                    >
+                      <span className="inline-flex items-center gap-2">
+                        <span
+                          className="w-2 h-2 rounded-full flex-shrink-0"
+                          style={{
+                            background:
+                              msg.status === "New" ? "#22c55e" : "#3b82f6",
+                          }}
+                        />
+                        {msg.name}
+                      </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
-                      {message.email}
+                    <td className="px-6 py-3.5" style={{ color: "#6b7280" }}>
+                      {msg.email}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">
-                      {message.subject}
+                    <td className="px-6 py-3.5" style={{ color: "#374151" }}>
+                      {msg.subject}
                     </td>
-                    <td className="px-6 py-4">
-                      {getStatusBadge(message.status)}
+                    <td
+                      className="px-6 py-3.5 text-xs"
+                      style={{ color: "#9ca3af" }}
+                    >
+                      {format(
+                        new Date(msg.createdAt || Date.now()),
+                        "d MMM yyyy",
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -252,7 +349,8 @@ const Dashboard: React.FC = () => {
                   <tr>
                     <td
                       colSpan={4}
-                      className="px-6 py-8 text-center text-gray-500"
+                      className="px-6 py-10 text-center text-sm"
+                      style={{ color: "#9ca3af" }}
                     >
                       No messages yet
                     </td>
@@ -263,32 +361,53 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Quick Actions */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-800">
+        {/* Quick Actions — 1/3 */}
+        <div
+          className="rounded-xl"
+          style={{
+            background: "#fff",
+            boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
+          }}
+        >
+          <div
+            className="px-6 py-4 border-b"
+            style={{ borderColor: "#f3f4f6" }}
+          >
+            <h2
+              className="font-semibold text-base"
+              style={{ color: "#111827" }}
+            >
               Quick Actions
             </h2>
           </div>
-          <div className="p-6 space-y-3">
-            {quickActions.map((action, index) => (
+          <div className="divide-y" style={{ borderColor: "#f3f4f6" }}>
+            {quickActions.map((action, i) => (
               <button
-                key={index}
+                key={i}
                 onClick={action.action}
-                className="w-full flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition-colors group text-left"
+                className="w-full flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 transition-colors text-left group"
               >
-                <div className={`${action.bgColor} p-2 rounded-lg`}>
-                  <action.icon className={action.color} size={20} />
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{ background: action.iconBg }}
+                >
+                  <action.icon size={18} style={{ color: action.iconColor }} />
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-medium text-gray-800 group-hover:text-primary-600">
+                <div className="flex-1 min-w-0">
+                  <p
+                    className="text-sm font-semibold leading-tight"
+                    style={{ color: "#111827" }}
+                  >
                     {action.title}
-                  </h3>
-                  <p className="text-sm text-gray-500">{action.description}</p>
+                  </p>
+                  <p className="text-xs mt-0.5" style={{ color: "#9ca3af" }}>
+                    {action.description}
+                  </p>
                 </div>
-                <ExternalLink
+                <ChevronRight
                   size={16}
-                  className="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="opacity-30 group-hover:opacity-70 transition-opacity flex-shrink-0"
+                  style={{ color: "#374151" }}
                 />
               </button>
             ))}
@@ -297,48 +416,98 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Recent Products */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-800">
+      <div
+        className="rounded-xl overflow-hidden"
+        style={{ background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}
+      >
+        <div
+          className="flex items-center justify-between px-6 py-4 border-b"
+          style={{ borderColor: "#f3f4f6" }}
+        >
+          <h2 className="font-semibold text-base" style={{ color: "#111827" }}>
             Recent Products
           </h2>
+          <a
+            href="/products"
+            className="text-xs font-medium hover:underline"
+            style={{ color: "#2563eb" }}
+          >
+            View all
+          </a>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                  PRODUCT NAME
+          <table className="w-full text-sm">
+            <thead>
+              <tr style={{ background: "#f9fafb" }}>
+                <th
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide"
+                  style={{ color: "#9ca3af" }}
+                >
+                  Image
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                  PRICE (ZAR)
+                <th
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide"
+                  style={{ color: "#9ca3af" }}
+                >
+                  Product Name
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                  STATUS
+                <th
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide"
+                  style={{ color: "#9ca3af" }}
+                >
+                  Price (ZAR)
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                  DATE
+                <th
+                  className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide"
+                  style={{ color: "#9ca3af" }}
+                >
+                  Status
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody>
               {recentProducts.map((product) => (
-                <tr key={product._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm text-gray-900">
+                <tr
+                  key={product._id}
+                  className="border-t hover:bg-gray-50 transition-colors"
+                  style={{ borderColor: "#f3f4f6" }}
+                >
+                  <td className="px-6 py-3.5">
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden"
+                      style={{ background: "#f3f4f6" }}
+                    >
+                      {product.image ? (
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <Package size={18} style={{ color: "#9ca3af" }} />
+                      )}
+                    </div>
+                  </td>
+                  <td
+                    className="px-6 py-3.5 font-medium"
+                    style={{ color: "#111827" }}
+                  >
                     {product.name}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">
+                  <td className="px-6 py-3.5" style={{ color: "#374151" }}>
                     R{product.price.toLocaleString()}.00
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-3.5">
                     <span
-                      className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${product.status === "Active" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                      className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold"
+                      style={
+                        product.status === "Active"
+                          ? { background: "#dcfce7", color: "#15803d" }
+                          : { background: "#fee2e2", color: "#dc2626" }
+                      }
                     >
                       {product.status}
                     </span>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
-                    {format(new Date(product.createdAt), "dd MMM yyyy")}
                   </td>
                 </tr>
               ))}
@@ -346,7 +515,8 @@ const Dashboard: React.FC = () => {
                 <tr>
                   <td
                     colSpan={4}
-                    className="px-6 py-8 text-center text-gray-500"
+                    className="px-6 py-10 text-center text-sm"
+                    style={{ color: "#9ca3af" }}
                   >
                     No products yet. Click "Add New Product" to get started.
                   </td>

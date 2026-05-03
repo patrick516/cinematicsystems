@@ -5,8 +5,8 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const path = require("path");
 
-// Database connection
-require("./src/config/db");
+const connectDB = require("./src/config/db");
+connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -39,7 +39,7 @@ app.use(
         return callback(null, true);
       }
 
-      console.log("❌ Blocked by CORS:", origin);
+      console.log(" Blocked by CORS:", origin);
       return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,

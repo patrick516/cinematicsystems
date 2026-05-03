@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, FileText } from "lucide-react";
+import { Search } from "lucide-react";
 import {
   useMessages,
   MessageTable,

@@ -1,4 +1,4 @@
-// app/components/common/product-card/index.tsx
+
 import { Star } from "lucide-react";
 
 interface Product {

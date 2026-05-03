@@ -10,9 +10,6 @@ import {
   X,
   Bell,
   ChevronDown,
-  Settings,
-  Users,
-  Contact,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import api from "../lib/api";

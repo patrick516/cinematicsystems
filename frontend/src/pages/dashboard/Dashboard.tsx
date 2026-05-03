@@ -304,6 +304,12 @@ const Dashboard: React.FC = () => {
                   >
                     Date
                   </th>
+                  <th
+                    className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide"
+                    style={{ color: "#9ca3af" }}
+                  >
+                    Status
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -342,6 +348,9 @@ const Dashboard: React.FC = () => {
                         new Date(msg.createdAt || Date.now()),
                         "d MMM yyyy",
                       )}
+                    </td>
+                    <td className="px-6 py-3.5">
+                      {getStatusBadge(msg.status)}
                     </td>
                   </tr>
                 ))}

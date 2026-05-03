@@ -17,35 +17,38 @@ const productRoutes = require("./src/routes/productRoutes");
 const serviceRoutes = require("./src/routes/serviceRoutes");
 const messageRoutes = require("./src/routes/messageRoutes");
 const dashboardRoutes = require("./src/routes/dashboardRoutes");
-const quotationRoutes = require("./src/routes/quotationRoutes"); // ✅ ADDED
+const quotationRoutes = require("./src/routes/quotationRoutes");
 
 // Allowed origins
 const allowedOrigins = [
+  "https://cinematicsystems.vercel.app",
+  "https://admin-cinematicsystems.vercel.app",
   "http://localhost:5173",
   "http://localhost:3000",
   "http://127.0.0.1:5173",
   "http://127.0.0.1:3000",
 ];
 
-// CORS configuration
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Allow server-to-server / Postman requests
       if (!origin) return callback(null, true);
 
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        console.log(`Blocked origin: ${origin}`);
-        callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
+
+      console.log("❌ Blocked by CORS:", origin);
+      return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
+// Middlewares
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
@@ -54,6 +57,7 @@ app.use(express.urlencoded({ extended: true }));
 // Static files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/services", serviceRoutes);

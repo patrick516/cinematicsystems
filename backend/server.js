@@ -6,7 +6,6 @@ const morgan = require("morgan");
 const path = require("path");
 
 const connectDB = require("./src/config/db");
-connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -29,10 +28,10 @@ const allowedOrigins = [
   "http://127.0.0.1:3000",
 ];
 
+// CORS
 app.use(
   cors({
     origin: function (origin, callback) {
-      // Allow server-to-server / Postman requests
       if (!origin) return callback(null, true);
 
       if (allowedOrigins.includes(origin)) {
@@ -65,7 +64,7 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/quotations", quotationRoutes);
 
-// Health check route
+// Health check
 app.get("/health", (req, res) => {
   res.json({
     status: "OK",
@@ -100,21 +99,37 @@ app.use((req, res) => {
 
 // Global error handler
 app.use((err, req, res, next) => {
-  console.error("Error:", err.message);
+  console.error(" Error:", err.message);
+
   res.status(err.status || 500).json({
     success: false,
     message: err.message || "Internal server error",
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log("\n" + "=".repeat(40));
-  console.log(` Server running on http://localhost:${PORT}`);
-  console.log(` Environment: ${process.env.NODE_ENV || "development"}`);
-  console.log(` Health check: http://localhost:${PORT}/health`);
-  console.log(` CORS enabled for: ${allowedOrigins.join(", ")}`);
-  console.log("=".repeat(40) + "\n");
-});
+//start server with db first
+const startServer = async () => {
+  try {
+    console.log("Connecting to database...");
+
+    await connectDB(); // IMPORTANT: wait for DB first
+
+    console.log(" Database connected successfully");
+
+    app.listen(PORT, () => {
+      console.log("\n========================================");
+      console.log(` Server running on http://localhost:${PORT}`);
+      console.log(` Environment: ${process.env.NODE_ENV || "development"}`);
+      console.log(` Health check: http://localhost:${PORT}/health`);
+      console.log(` CORS enabled for: ${allowedOrigins.join(", ")}`);
+      console.log("========================================\n");
+    });
+  } catch (error) {
+    console.error(" Failed to start server:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 module.exports = app;

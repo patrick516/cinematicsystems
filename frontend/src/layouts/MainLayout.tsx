@@ -10,8 +10,10 @@ import {
   X,
   Bell,
   ChevronDown,
+  BarChart2,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+
 import api from "../lib/api";
 
 const MainLayout: React.FC = () => {
@@ -49,6 +51,11 @@ const MainLayout: React.FC = () => {
       label: "Messages",
       icon: MessageSquare,
       badge: unreadCount > 0 ? unreadCount : null,
+    },
+    {
+      path: "/analytics",
+      label: "Analytics",
+      icon: BarChart2,
     },
   ];
 

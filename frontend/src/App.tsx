@@ -6,6 +6,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import Products from "./pages/products/Products";
 import Services from "./pages/services/Services";
 import Messages from "./pages/messages/Messages";
+import Analytics from "./pages/analytics/Analytics";
 import MainLayout from "./layouts/MainLayout";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
@@ -36,6 +37,7 @@ function AppRoutes() {
         <Route path="products" element={<Products />} />
         <Route path="services" element={<Services />} />
         <Route path="messages" element={<Messages />} />
+        <Route path="/analytics" element={<Analytics />} />
       </Route>
     </Routes>
   );

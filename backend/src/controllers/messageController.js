@@ -81,7 +81,33 @@ const replyToMessage = async (req, res) => {
 
 const createMessage = async (req, res) => {
   try {
-    const message = await Message.create(req.body);
+    // 🌍 Capture IP address
+    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "";
+
+    // 🌐 Capture browser info
+    const userAgent = req.headers["user-agent"] || "";
+
+    const message = await Message.create({
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone || "",
+      subject: req.body.subject,
+      message: req.body.message,
+
+      // 🧠 service info
+      service: req.body.service || "",
+
+      // 📊 tracking data
+      source: req.body.source || "direct",
+      utm_source: req.body.utm_source || "",
+      utm_medium: req.body.utm_medium || "",
+      utm_campaign: req.body.utm_campaign || "",
+
+      //  auto-captured
+      ip_address: ip,
+      user_agent: userAgent,
+    });
+
     res.status(201).json(message);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -1,14 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
 
 const Contact = () => {
+  const searchParams = useSearchParams();
+  const serviceFromUrl = searchParams.get("service");
+  const sourceFromUrl = searchParams.get("source");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     message: "",
+    service: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -33,8 +38,12 @@ const Contact = () => {
             name: formData.name,
             email: formData.email,
             phone: formData.phone || "",
-            subject: "Contact Form Submission",
-            message: formData.message,
+            subject: `Service Request: ${formData.service || "General Inquiry"}`,
+            message: formData.service
+              ? `Service: ${formData.service}\n\n${formData.message}`
+              : formData.message,
+
+            source: sourceFromUrl || "direct",
           }),
         },
       );
@@ -44,7 +53,15 @@ const Contact = () => {
           type: "success",
           message: "Thank you! We'll get back to you soon.",
         });
-        setFormData({ name: "", email: "", phone: "", message: "" });
+        const currentService = formData.service;
+
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+          service: currentService,
+        });
       } else {
         throw new Error("Failed to send message");
       }
@@ -62,6 +79,15 @@ const Contact = () => {
     }
   };
 
+  useEffect(() => {
+    if (serviceFromUrl && !formData.service) {
+      setFormData((prev) => ({
+        ...prev,
+        service: decodeURIComponent(serviceFromUrl),
+      }));
+    }
+  }, [serviceFromUrl]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -70,8 +96,6 @@ const Contact = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
-  // SIMPLE FORM VALIDATION (no logic change, only UI state)
   const isFormValid =
     formData.name.trim() && formData.email.trim() && formData.message.trim();
 
@@ -146,6 +170,18 @@ const Contact = () => {
                 disabled={submitting}
               />
 
+              {formData.service && (
+                <div className="space-y-1">
+                  <label className="text-xs text-gray-500">
+                    Selected Service
+                  </label>
+                  <input
+                    value={formData.service}
+                    readOnly
+                    className="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-200 text-sm text-gray-700"
+                  />
+                </div>
+              )}
               {/* Message */}
               <textarea
                 name="message"

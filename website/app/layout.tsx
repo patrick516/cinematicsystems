@@ -1,15 +1,16 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/app/components/shared/Header";
 import Footer from "@/app/components/shared/Footer";
+import AnalyticsProvider from "./providers/AnalyticsProvider";
 import { Toaster } from "sonner";
 
 const font = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -30,12 +31,33 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={font.className}>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+      <head>
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+        />
 
-        {/* Toast notifications */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+
+        gtag('js', new Date());
+        gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+      `,
+          }}
+        />
+      </head>
+
+      <body className={font.className}>
+        <AnalyticsProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </AnalyticsProvider>
+
         <Toaster position="top-right" richColors />
       </body>
     </html>

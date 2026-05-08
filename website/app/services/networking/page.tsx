@@ -70,8 +70,17 @@ export default function NetworkingPage() {
             commercial areas.
           </p>
 
-          <div className="w-full h-64 bg-gray-200 rounded-xl flex items-center justify-center text-gray-500">
-            Google Map Location (Coming Soon)
+          <div className="overflow-hidden rounded-xl border">
+            <iframe
+              src="https://www.google.com/maps?q=-26.031983,27.932502&z=17&output=embed"
+              width="100%"
+              height="350"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="w-full"
+            />
           </div>
         </div>
 

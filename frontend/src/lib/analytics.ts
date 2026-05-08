@@ -1,9 +1,18 @@
 import ReactGA from "react-ga4";
 
+const GA_ID = import.meta.env.VITE_GA_ID || "";
+
+// -------------------------
+// INIT
+// -------------------------
 export const initGA = () => {
-  ReactGA.initialize("G-XXXXXXXXXX");
+  if (!GA_ID) return;
+  ReactGA.initialize(GA_ID);
 };
 
+// -------------------------
+// PAGE VIEW
+// -------------------------
 export const trackPageView = (path: string) => {
   ReactGA.send({
     hitType: "pageview",
@@ -11,10 +20,13 @@ export const trackPageView = (path: string) => {
   });
 };
 
-export const trackLead = (service: string, source: string = "website") => {
+// -------------------------
+// LEAD SUBMITTED
+// -------------------------
+export const trackLead = (service: string) => {
   ReactGA.event({
     category: "Lead",
     action: "Form Submission",
-    label: service,
+    label: service || "General Inquiry",
   });
 };

@@ -81,29 +81,36 @@ const replyToMessage = async (req, res) => {
 
 const createMessage = async (req, res) => {
   try {
-    // 🌍 Capture IP address
+    // Auto-capture IP address
     const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "";
 
-    // 🌐 Capture browser info
+    // Auto-capture user agent from server side (overrides client-sent value as source of truth)
     const userAgent = req.headers["user-agent"] || "";
 
     const message = await Message.create({
+      // Basic customer info
       name: req.body.name,
       email: req.body.email,
       phone: req.body.phone || "",
       subject: req.body.subject,
       message: req.body.message,
 
-      // 🧠 service info
+      // Service context
       service: req.body.service || "",
 
-      // 📊 tracking data
+      // Full UTM attribution (all 5 params)
       source: req.body.source || "direct",
       utm_source: req.body.utm_source || "",
       utm_medium: req.body.utm_medium || "",
       utm_campaign: req.body.utm_campaign || "",
+      utm_term: req.body.utm_term || "",
+      utm_content: req.body.utm_content || "",
 
-      //  auto-captured
+      // Page context
+      referrer: req.body.referrer || "",
+      landing_page: req.body.landing_page || "",
+
+      // Auto-captured server side
       ip_address: ip,
       user_agent: userAgent,
     });

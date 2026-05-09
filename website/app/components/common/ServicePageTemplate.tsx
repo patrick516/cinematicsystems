@@ -1,6 +1,35 @@
 "use client";
 
 import GetQuoteButton from "@/app/components/shared/GetQuoteButton";
+import { Phone } from "lucide-react";
+
+const ALL_PICTURES = [
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.54.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.54-1.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.55.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.55-1.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.56.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.57.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.57-1.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.57-2.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.58.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.58-1.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.59.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.59-1.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.59-2.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.59-3.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.00.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.00-1.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.00-2.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.01.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.01-1.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.01-2.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.01-3.jpeg",
+  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.02.jpeg",
+];
+
+// Duplicate array for seamless infinite loop
+const PICTURES = [...ALL_PICTURES, ...ALL_PICTURES];
 
 type Props = {
   title: string;
@@ -24,15 +53,51 @@ export default function ServicePageTemplate({
           <p className="text-xs text-gray-400 mt-2">
             Professional installation • Fast response • Free consultation
           </p>
-
           <p className="text-gray-600 mt-4 max-w-2xl mx-auto">{description}</p>
 
-          <div className="mt-6">
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
             <GetQuoteButton service={serviceName} />
+            <a
+              href="tel:+27604243676"
+              className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 transition"
+            >
+              <Phone className="w-4 h-4" />
+              +27 604 243 676
+            </a>
+          </div>
+
+          <p className="text-xs text-gray-400 mt-4">
+            ✓ Certified installers &nbsp;·&nbsp; ✓ Same-day service
+            &nbsp;·&nbsp; ✓ Warranty included
+          </p>
+        </div>
+
+        {/* SCROLLING PHOTO GALLERY */}
+        <div className="mb-14">
+          <p className="text-sm font-semibold text-gray-700 mb-3">Our Work</p>
+          <div className="overflow-hidden rounded-2xl">
+            <div
+              className="flex gap-3 animate-scroll-left"
+              style={{ width: "max-content" }}
+            >
+              {PICTURES.map((src, i) => (
+                <div
+                  key={i}
+                  className="flex-shrink-0 w-56 h-40 rounded-xl overflow-hidden border border-gray-100 shadow-sm bg-gray-100"
+                >
+                  <img
+                    src={src}
+                    alt={`Cinematic Systems installation ${(i % ALL_PICTURES.length) + 1}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* BENEFITS (STATIC FOR NOW) */}
+        {/* BENEFITS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <div className="bg-white p-6 rounded-2xl shadow-sm border">
             <h3 className="font-semibold text-lg mb-2">
@@ -42,14 +107,12 @@ export default function ServicePageTemplate({
               Expert setup and configuration for reliability.
             </p>
           </div>
-
           <div className="bg-white p-6 rounded-2xl shadow-sm border">
             <h3 className="font-semibold text-lg mb-2">High Quality Systems</h3>
             <p className="text-sm text-gray-600">
               Industry-standard equipment and solutions.
             </p>
           </div>
-
           <div className="bg-white p-6 rounded-2xl shadow-sm border">
             <h3 className="font-semibold text-lg mb-2">Ongoing Support</h3>
             <p className="text-sm text-gray-600">
@@ -61,25 +124,27 @@ export default function ServicePageTemplate({
         {/* CTA SECTION */}
         <div className="bg-blue-600 text-white rounded-2xl p-8 text-center mb-12">
           <h2 className="text-2xl font-semibold">Get a Fast Quote Today</h2>
-
           <p className="mt-2 text-sm opacity-90">
             We respond quickly with pricing and installation options.
           </p>
-
-          <div className="mt-5">
+          <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-4">
             <GetQuoteButton service={serviceName} />
+            <a
+              href="tel:+27604243676"
+              className="flex items-center gap-2 text-sm font-semibold text-white/90 hover:text-white transition"
+            >
+              <Phone className="w-4 h-4" />
+              +27 604 243 676
+            </a>
           </div>
         </div>
 
-        {/* MAP PLACEHOLDER */}
-        {/* REAL GOOGLE MAP */}
+        {/* MAP */}
         <div className="bg-white border rounded-2xl p-6">
           <h3 className="font-semibold text-lg mb-2">Our Location</h3>
-
           <p className="text-sm text-gray-600 mb-4">
             Visit our office location on Google Maps
           </p>
-
           <div className="overflow-hidden rounded-xl border">
             <iframe
               src="https://www.google.com/maps?q=-26.031983,27.932502&z=17&output=embed"

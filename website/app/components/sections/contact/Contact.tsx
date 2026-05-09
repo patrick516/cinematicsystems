@@ -13,7 +13,7 @@ const Contact = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
             Get In Touch
           </h2>
-          <p className="text-gray-600 mt-4 max-w-xl mx-auto text-base">
+          <p className="text-gray-600 mt-10 max-w-xl mx-auto text-base">
             Send us a message and we'll respond as soon as possible.
           </p>
         </div>

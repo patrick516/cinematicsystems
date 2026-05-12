@@ -198,7 +198,8 @@ const Login: React.FC = () => {
             style={{ borderColor: "#f3f4f6" }}
           >
             <p className="text-xs" style={{ color: "#9ca3af" }}>
-              © 2024 Cinematic Systems. All Rights Reserved.
+              © {new Date().getFullYear()} Cinematic Systems. All Rights
+              Reserved.
             </p>
           </div>
         </div>

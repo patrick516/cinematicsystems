@@ -72,7 +72,10 @@ const Footer = () => {
       {/* BOTTOM BAR */}
       <div className="bg-[#070a12] py-3">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-xs text-gray-500 text-center md:text-left">
-          <p>© 2024 Cinematic Systems. All Rights Reserved.</p>
+          <p>
+            © {new Date().getFullYear()} Cinematic Systems. All Rights Reserved.
+          </p>
+
           <p className="mt-2 md:mt-0">
             Neat, Reliable, Reasonable & Professional
           </p>

@@ -22,6 +22,9 @@ const quotationRoutes = require("./src/routes/quotationRoutes");
 const allowedOrigins = [
   "https://cinematicsystems.vercel.app",
   "https://admin-cinematicsystems.vercel.app",
+  "https://www.cinematicsystems.co.za",
+  "https://cinematicsystems.co.za",
+  "https://admin.cinematicsystems.co.za",
   "http://localhost:5173",
   "http://localhost:3000",
   "http://127.0.0.1:5173",

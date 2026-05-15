@@ -91,11 +91,12 @@ export const metadata: Metadata = {
 
   // ─── ICONS ───────────────────────────────────────────────────────
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    icon: [
+      { url: "/icons/favicon.ico" },
+      { url: "/icons/icon1.png", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/apple-icon.png" }],
   },
-
   // ─── VERIFICATION (add after submitting to Google Search Console) ─
   // verification: {
   //   google: "your-google-verification-code",

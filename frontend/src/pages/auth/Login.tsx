@@ -5,8 +5,8 @@ import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import logo from "../../assets/logo.jpeg";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("admin@cinematicsystems.co.za");
-  const [password, setPassword] = useState("admin123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();

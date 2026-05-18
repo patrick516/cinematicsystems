@@ -13,14 +13,13 @@ export default function MaintenancePage() {
     <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
       <div className="max-w-lg w-full text-center">
         {/* LOGO */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mt-6 mb-4">
           <img
-            src="/images/logo.jpeg"
+            src="/images/tranptech-logo.svg"
             alt="Cinematic Systems"
-            className="w-20 h-20 rounded-full object-cover border-4 border-blue-500"
+            className="w-40 h-40 object-contain"
           />
         </div>
-
         {/* ICON */}
         <div className="flex justify-center mb-6">
           <div className="w-20 h-20 bg-blue-600/20 rounded-full flex items-center justify-center">

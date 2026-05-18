@@ -5,6 +5,7 @@ import Header from "@/app/components/shared/Header";
 import Footer from "@/app/components/shared/Footer";
 import AnalyticsProvider from "./providers/AnalyticsProvider";
 import { Toaster } from "sonner";
+import { headers } from "next/headers";
 
 const font = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -14,7 +15,6 @@ const font = Plus_Jakarta_Sans({
 const BASE_URL = "https://www.cinematicsystems.co.za";
 
 export const metadata: Metadata = {
-  // ─── BASIC ───────────────────────────────────────────────────────
   metadataBase: new URL(BASE_URL),
   title: {
     default: "Cinematic Systems | CCTV, DSTV & Home Entertainment Johannesburg",
@@ -42,13 +42,9 @@ export const metadata: Metadata = {
   creator: "Cinematic Systems",
   publisher: "Cinematic Systems",
   category: "Home Services",
-
-  // ─── CANONICAL ───────────────────────────────────────────────────
   alternates: {
     canonical: BASE_URL,
   },
-
-  // ─── OPEN GRAPH (WhatsApp, Facebook, LinkedIn preview) ───────────
   openGraph: {
     type: "website",
     locale: "en_ZA",
@@ -66,8 +62,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-
-  // ─── TWITTER CARD ────────────────────────────────────────────────
   twitter: {
     card: "summary_large_image",
     title: "Cinematic Systems | CCTV, DSTV & Home Entertainment Johannesburg",
@@ -75,8 +69,6 @@ export const metadata: Metadata = {
       "Professional CCTV, DSTV, WiFi, home theatre and access control installation in Johannesburg and Pretoria.",
     images: ["/images/og-image.jpeg"],
   },
-
-  // ─── ROBOTS ──────────────────────────────────────────────────────
   robots: {
     index: true,
     follow: true,
@@ -88,8 +80,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-
-  // ─── ICONS ───────────────────────────────────────────────────────
   icons: {
     icon: [
       { url: "/icons/favicon.ico" },
@@ -97,17 +87,17 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/icons/apple-icon.png" }],
   },
-  // ─── VERIFICATION (add after submitting to Google Search Console) ─
-  // verification: {
-  //   google: "your-google-verification-code",
-  // },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") ?? "";
+  const isMaintenance = pathname.startsWith("/maintenance");
+
   return (
     <html lang="en">
       <head>
@@ -129,9 +119,9 @@ export default function RootLayout({
       </head>
       <body className={font.className}>
         <AnalyticsProvider>
-          <Header />
+          {!isMaintenance && <Header />}
           <main>{children}</main>
-          <Footer />
+          {!isMaintenance && <Footer />}
         </AnalyticsProvider>
         <Toaster position="top-right" richColors />
       </body>

@@ -1,6 +1,3 @@
-// website/app/services/entertainment/page.tsx
-
-// ✅ CONVERTED from ServicePageTemplate to a proper hub page with metadata and structured data
 import type { Metadata } from "next";
 import Link from "next/link";
 import GetQuoteButton from "@/app/components/shared/GetQuoteButton";

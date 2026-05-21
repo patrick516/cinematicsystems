@@ -1,6 +1,3 @@
-// website/app/services/networking/page.tsx
-
-// ✅ REMOVED "use client" — now a Server Component so metadata and SEO work properly
 import type { Metadata } from "next";
 import Link from "next/link";
 import GetQuoteButton from "@/app/components/shared/GetQuoteButton";

@@ -46,10 +46,10 @@ export default function ServicePageTemplate({
   children,
 }: Props) {
   return (
-    <section className="bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 py-20">
+    <section className="bg-red-500">
+      <div className=" mx-auto px-2 py-2">
         {/* HERO */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 ">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
             {title}
           </h1>

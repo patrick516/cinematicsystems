@@ -139,7 +139,7 @@ export default function WiFiPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      <section className="py-16 bg-gray-50">
+      <section className="py-16  bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
           {/* BREADCRUMB */}
           <p className="text-sm text-gray-400 mb-6">

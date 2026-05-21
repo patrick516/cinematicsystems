@@ -1,46 +1,49 @@
-"use client";
-
+import GalleryScroll from "@/app/components/common/GalleryScroll";
 import GetQuoteButton from "@/app/components/shared/GetQuoteButton";
 import { Phone } from "lucide-react";
 
-const ALL_PICTURES = [
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.54.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.54-1.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.55.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.55-1.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.56.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.57.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.57-1.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.57-2.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.58.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.58-1.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.59.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.59-1.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.59-2.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.00.59-3.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.00.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.00-1.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.00-2.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.01.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.01-1.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.01-2.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.01-3.jpeg",
-  "/pictures/WhatsApp-Image-2026-05-08-at-13.01.02.jpeg",
-];
+export type Benefit = {
+  title: string;
+  description: string;
+};
 
-// Duplicate array for seamless infinite loop
-const PICTURES = [...ALL_PICTURES, ...ALL_PICTURES];
+export type FAQItem = {
+  question: string;
+  answer: string;
+};
 
 type Props = {
   title: string;
   description: string;
   serviceName: string;
+  // Optional: unique content per service page
+  benefits?: Benefit[];
+  faqs?: FAQItem[];
+  children?: React.ReactNode; // for any extra unique content
 };
+
+const DEFAULT_BENEFITS: Benefit[] = [
+  {
+    title: "Professional Installation",
+    description: "Expert setup and configuration for long-term reliability.",
+  },
+  {
+    title: "High Quality Systems",
+    description: "Industry-standard equipment and proven solutions.",
+  },
+  {
+    title: "Ongoing Support",
+    description: "Maintenance and technical assistance after installation.",
+  },
+];
 
 export default function ServicePageTemplate({
   title,
   description,
   serviceName,
+  benefits = DEFAULT_BENEFITS,
+  faqs,
+  children,
 }: Props) {
   return (
     <section className="bg-gray-50">
@@ -72,54 +75,61 @@ export default function ServicePageTemplate({
           </p>
         </div>
 
-        {/* SCROLLING PHOTO GALLERY */}
-        <div className="mb-14">
-          <p className="text-sm font-semibold text-gray-700 mb-3">Our Work</p>
-          <div className="overflow-hidden rounded-2xl">
-            <div
-              className="flex gap-3 animate-scroll-left"
-              style={{ width: "max-content" }}
-            >
-              {PICTURES.map((src, i) => (
+        {/* SCROLLING PHOTO GALLERY — client component isolated here */}
+        <GalleryScroll serviceName={serviceName} />
+
+        {/* BENEFITS — unique per page via props */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {benefits.map((b, i) => (
+            <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border">
+              <h3 className="font-semibold text-lg mb-2">{b.title}</h3>
+              <p className="text-sm text-gray-600">{b.description}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* EXTRA UNIQUE CONTENT slot — pass children from page.tsx */}
+        {children && <div className="mb-12">{children}</div>}
+
+        {/* FAQ SECTION — renders only if faqs are provided */}
+        {faqs && faqs.length > 0 && (
+          <div className="mb-12">
+            {/* Structured data for Google rich snippets */}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: faqs.map((faq) => ({
+                    "@type": "Question",
+                    name: faq.question,
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: faq.answer,
+                    },
+                  })),
+                }),
+              }}
+            />
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {faqs.map((faq, i) => (
                 <div
                   key={i}
-                  className="flex-shrink-0 w-56 h-40 rounded-xl overflow-hidden border border-gray-100 shadow-sm bg-gray-100"
+                  className="bg-white border rounded-2xl p-6 shadow-sm"
                 >
-                  <img
-                    src={src}
-                    alt={`Cinematic Systems installation ${(i % ALL_PICTURES.length) + 1}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                  <h3 className="font-semibold text-gray-900 mb-2">
+                    {faq.question}
+                  </h3>
+                  <p className="text-sm text-gray-600">{faq.answer}</p>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-
-        {/* BENEFITS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white p-6 rounded-2xl shadow-sm border">
-            <h3 className="font-semibold text-lg mb-2">
-              Professional Installation
-            </h3>
-            <p className="text-sm text-gray-600">
-              Expert setup and configuration for reliability.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border">
-            <h3 className="font-semibold text-lg mb-2">High Quality Systems</h3>
-            <p className="text-sm text-gray-600">
-              Industry-standard equipment and solutions.
-            </p>
-          </div>
-          <div className="bg-white p-6 rounded-2xl shadow-sm border">
-            <h3 className="font-semibold text-lg mb-2">Ongoing Support</h3>
-            <p className="text-sm text-gray-600">
-              Maintenance and assistance after installation.
-            </p>
-          </div>
-        </div>
+        )}
 
         {/* CTA SECTION */}
         <div className="bg-blue-600 text-white rounded-2xl p-8 text-center mb-12">
@@ -143,7 +153,7 @@ export default function ServicePageTemplate({
         <div className="bg-white border rounded-2xl p-6">
           <h3 className="font-semibold text-lg mb-2">Our Location</h3>
           <p className="text-sm text-gray-600 mb-4">
-            Visit our office location on Google Maps
+            Serving Johannesburg, Pretoria and surrounding Gauteng areas
           </p>
           <div className="overflow-hidden rounded-xl border">
             <iframe

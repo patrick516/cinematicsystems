@@ -35,12 +35,106 @@ export const metadata: Metadata = {
   },
 };
 
+// Structured data for local business + service
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "CCTV Installation",
+  provider: {
+    "@type": "LocalBusiness",
+    name: "Cinematic Systems",
+    url: "https://www.cinematicsystems.co.za",
+    telephone: "+27604243676",
+    areaServed: ["Johannesburg", "Pretoria", "Gauteng"],
+  },
+  serviceType: "Security Camera Installation",
+  areaServed: "Johannesburg, Pretoria, Gauteng",
+  description:
+    "Professional CCTV installation for homes and businesses in Johannesburg and Pretoria. HD recording, night vision, remote viewing.",
+};
+
 export default function CCTVPage() {
   return (
-    <ServicePageTemplate
-      title="CCTV Installation Services"
-      description="Professional CCTV installation for homes, offices, and businesses in Johannesburg and Pretoria. Secure your property with modern surveillance systems featuring HD recording, night vision, and remote viewing."
-      serviceName="Security - CCTV"
-    />
+    <>
+      {/* Service structured data for Google */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+
+      <ServicePageTemplate
+        title="CCTV Installation Services in Johannesburg"
+        description="Professional CCTV installation for homes, offices, and businesses in Johannesburg and Pretoria. Secure your property with modern surveillance systems featuring HD recording, night vision, and remote viewing from anywhere."
+        serviceName="Security - CCTV"
+        benefits={[
+          {
+            title: "HD & 4K Camera Systems",
+            description:
+              "Crystal-clear recording day and night with industry-leading Hikvision and Dahua cameras.",
+          },
+          {
+            title: "Remote Viewing 24/7",
+            description:
+              "Monitor your property from your phone anywhere in the world using our mobile app setup.",
+          },
+          {
+            title: "Full Warranty & Support",
+            description:
+              "All installations come with a warranty and ongoing technical support from our certified team.",
+          },
+        ]}
+        faqs={[
+          {
+            question: "How much does CCTV installation cost in Johannesburg?",
+            answer:
+              "CCTV installation costs depend on the number of cameras and system type. We offer free quotes and competitive pricing for both homes and businesses. Contact us for a tailored quote.",
+          },
+          {
+            question: "How long does CCTV installation take?",
+            answer:
+              "A standard home installation with 4–8 cameras typically takes 4–6 hours. Larger business installations may take a full day. We offer same-day service for urgent requirements.",
+          },
+          {
+            question: "Can I view my CCTV cameras on my phone?",
+            answer:
+              "Yes. We set up remote viewing on your smartphone so you can monitor your property from anywhere in the world, 24 hours a day.",
+          },
+          {
+            question: "What areas do you cover for CCTV installation?",
+            answer:
+              "We cover Johannesburg, Pretoria, Sandton, Randburg, Roodepoort, Centurion, Midrand and surrounding Gauteng areas.",
+          },
+          {
+            question: "Do you install both indoor and outdoor CCTV cameras?",
+            answer:
+              "Yes, we install both indoor and outdoor cameras. Outdoor cameras are weatherproof and designed to withstand South African weather conditions.",
+          },
+        ]}
+      >
+        {/* UNIQUE content section specific to CCTV page */}
+        <div className="bg-white border rounded-2xl p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            What's Included in Our CCTV Installation
+          </h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-gray-700">
+            {[
+              "Site assessment and camera placement planning",
+              "Professional cable routing and concealment",
+              "HD or 4K camera supply and mounting",
+              "DVR/NVR recorder setup and configuration",
+              "Remote viewing app setup on your phone",
+              "Night vision and motion detection setup",
+              "Full system testing before handover",
+              "User training on how to use the system",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span className="text-blue-600 font-bold mt-0.5">✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </ServicePageTemplate>
+    </>
   );
 }

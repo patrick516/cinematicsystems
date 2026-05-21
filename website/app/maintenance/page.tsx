@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Phone, Mail, AlertTriangle, Lock } from "lucide-react";
+import { AlertTriangle, Lock } from "lucide-react";
+import ShutdownButton from "./ShutdownButton";
 
 export const metadata: Metadata = {
   title: "Site Suspended | Official Developer Notice",
@@ -61,14 +62,14 @@ export default function MaintenancePage() {
           </p>
         </div>
 
-        {/* DIVIDER */}
+        {/* DIVIDER
         <div className="flex items-center gap-3 mb-6">
           <div className="flex-1 h-px bg-gray-800" />
           <p className="text-gray-600 text-xs uppercase tracking-widest whitespace-nowrap">
             Contracted Developer — Contact to Resolve
           </p>
           <div className="flex-1 h-px bg-gray-800" />
-        </div>
+        </div> */}
 
         {/* CONTACT CARD */}
         {/* <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
@@ -105,11 +106,13 @@ export default function MaintenancePage() {
         </div> */}
 
         {/* FOOTER NOTE */}
-        <p className="text-gray-600 text-xs text-center mt-8 leading-relaxed">
+        <p className="text-gray-600 text-xs text-center mt-4 leading-relaxed">
           Full access will be restored within 24 hours of payment confirmation.
           <br />
           This notice will be removed automatically upon resolution.
         </p>
+
+        <ShutdownButton />
       </div>
     </div>
   );

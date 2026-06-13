@@ -7,7 +7,7 @@ const BASE_URL = "https://www.cinematicsystems.co.za";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    // ─── HOMEPAGE ────────────────────────────────────────────────
+    // ─── HOMEPAGE
     {
       url: BASE_URL,
       lastModified: new Date("2026-05-08"),
@@ -15,7 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
 
-    // ─── CONTACT ─────────────────────────────────────────────────
+    // ─── CONTACT
     {
       url: `${BASE_URL}/contact`,
       lastModified: new Date("2026-05-08"),
@@ -23,7 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
 
-    // ─── SERVICES HUB ────────────────────────────────────────────
+    // ─── SERVICES HUB
     {
       url: `${BASE_URL}/services`,
       lastModified: new Date("2026-05-08"),
@@ -31,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
 
-    // ─── SECURITY ────────────────────────────────────────────────
+    // ─── SECURITY
     {
       url: `${BASE_URL}/services/security`,
       lastModified: new Date("2026-05-08"),
@@ -63,7 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
 
-    // ─── TV SYSTEMS ───────────────────────────────────────────────
+    // ─── TV SYSTEMS
     {
       url: `${BASE_URL}/services/tv-systems`,
       lastModified: new Date("2026-05-08"),
@@ -95,7 +95,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
 
-    // ─── NETWORKING ───────────────────────────────────────────────
+    // ─── NETWORKING
     {
       url: `${BASE_URL}/services/networking`,
       lastModified: new Date("2026-05-08"),
@@ -121,7 +121,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
 
-    // ─── ENTERTAINMENT ────────────────────────────────────────────
+    // ─── ENTERTAINMENT
     {
       url: `${BASE_URL}/services/entertainment`,
       lastModified: new Date("2026-05-08"),

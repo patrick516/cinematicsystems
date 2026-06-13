@@ -16,10 +16,9 @@ type Props = {
   title: string;
   description: string;
   serviceName: string;
-  // Optional: unique content per service page
   benefits?: Benefit[];
   faqs?: FAQItem[];
-  children?: React.ReactNode; // for any extra unique content
+  children?: React.ReactNode;
 };
 
 const DEFAULT_BENEFITS: Benefit[] = [
@@ -46,10 +45,10 @@ export default function ServicePageTemplate({
   children,
 }: Props) {
   return (
-    <section className="bg-red-500">
-      <div className=" mx-auto px-2 py-2">
+    <section className="bg-gray-50 py-20">
+      <div className="max-w-6xl mx-auto px-4">
         {/* HERO */}
-        <div className="text-center mb-12 ">
+        <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
             {title}
           </h1>
@@ -75,10 +74,10 @@ export default function ServicePageTemplate({
           </p>
         </div>
 
-        {/* SCROLLING PHOTO GALLERY — client component isolated here */}
+        {/* SCROLLING PHOTO GALLERY */}
         <GalleryScroll serviceName={serviceName} />
 
-        {/* BENEFITS — unique per page via props */}
+        {/* BENEFITS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {benefits.map((b, i) => (
             <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border">
@@ -88,13 +87,12 @@ export default function ServicePageTemplate({
           ))}
         </div>
 
-        {/* EXTRA UNIQUE CONTENT slot — pass children from page.tsx */}
+        {/* EXTRA UNIQUE CONTENT slot */}
         {children && <div className="mb-12">{children}</div>}
 
-        {/* FAQ SECTION — renders only if faqs are provided */}
+        {/* FAQ SECTION */}
         {faqs && faqs.length > 0 && (
           <div className="mb-12">
-            {/* Structured data for Google rich snippets */}
             <script
               type="application/ld+json"
               dangerouslySetInnerHTML={{

@@ -27,9 +27,65 @@ export const metadata: Metadata = {
   },
 };
 
+// LocalBusiness schema — critical for Google local search ranking
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Cinematic Systems",
+  url: "https://www.cinematicsystems.co.za",
+  telephone: "+27604243676",
+  description:
+    "Professional CCTV installation, DStv setup, WiFi networking, home theatre, access control and TV mounting services in Johannesburg and Pretoria.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Johannesburg",
+    addressRegion: "Gauteng",
+    addressCountry: "ZA",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: -26.031983,
+    longitude: 27.932502,
+  },
+  areaServed: [
+    { "@type": "City", name: "Johannesburg" },
+    { "@type": "City", name: "Pretoria" },
+    { "@type": "State", name: "Gauteng" },
+  ],
+  serviceType: [
+    "CCTV Installation",
+    "DStv Installation",
+    "WiFi Installation",
+    "Home Theatre Installation",
+    "Access Control",
+    "TV Wall Mounting",
+    "Intercom Systems",
+    "Biometric Systems",
+  ],
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ],
+    opens: "08:00",
+    closes: "18:00",
+  },
+  image: "https://www.cinematicsystems.co.za/images/og-image.jpeg",
+  sameAs: [],
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Hero />
       <Products />
       <Services />

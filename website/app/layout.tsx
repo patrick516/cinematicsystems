@@ -5,7 +5,6 @@ import Header from "@/app/components/shared/Header";
 import Footer from "@/app/components/shared/Footer";
 import AnalyticsProvider from "./providers/AnalyticsProvider";
 import { Toaster } from "sonner";
-import { headers } from "next/headers";
 
 const font = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -91,15 +90,11 @@ export const metadata: Metadata = {
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const headersList = await headers();
-  const pathname = headersList.get("x-pathname") ?? "";
-  const isMaintenance = pathname.startsWith("/maintenance");
-
   return (
     <html lang="en">
       <head>
@@ -125,9 +120,9 @@ export default async function RootLayout({
       </head>
       <body className={font.className}>
         <AnalyticsProvider>
-          {!isMaintenance && <Header />}
+          <Header />
           <main>{children}</main>
-          {!isMaintenance && <Footer />}
+          <Footer />
         </AnalyticsProvider>
         <Toaster position="top-right" richColors />
       </body>

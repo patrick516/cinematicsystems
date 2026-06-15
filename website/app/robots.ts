@@ -5,7 +5,13 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/_next/", "/maintenance/"],
+      disallow: [
+        "/api/",
+        "/_next/",
+        "/maintenance/",
+        "/favicon.ico",
+        "/icons/",
+      ],
     },
     sitemap: "https://www.cinematicsystems.co.za/sitemap.xml",
   };

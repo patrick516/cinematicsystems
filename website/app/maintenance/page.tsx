@@ -39,13 +39,15 @@ export default function MaintenancePage() {
             This website has been temporarily suspended by the{" "}
             <span className="font-semibold text-red-200">
               contracted developer
-            </span>
-            . Access has been restricted pending the settlement of{" "}
+            </span>{" "}
+            pending the resolution of{" "}
             <span className="font-semibold text-red-200">
               outstanding invoices
             </span>{" "}
-            for professional web development services rendered. This action is
-            in accordance with standard developer contractual rights.
+            related to professional web development services provided. The
+            suspension is in accordance with the agreed terms of service and
+            contractual obligations. Access will be restored upon settlement of
+            the outstanding balance.
           </p>
         </div>
 

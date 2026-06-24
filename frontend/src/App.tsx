@@ -8,6 +8,11 @@ import Services from "./pages/services/Services";
 import Messages from "./pages/messages/Messages";
 import Analytics from "./pages/analytics/Analytics";
 import MainLayout from "./layouts/MainLayout";
+import MaintenanceLayout from "./layouts/MaintenanceLayout";
+import MaintenancePage from "./pages/maintenance/Maintenance";
+
+// Check maintenance mode from environment variable
+const isMaintenanceMode = import.meta.env.VITE_MAINTENANCE_MODE === "true";
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -19,6 +24,23 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
 function AppRoutes() {
   const { isAuthenticated } = useAuth();
 
+  // If in maintenance mode, show only the maintenance page
+  if (isMaintenanceMode) {
+    return (
+      <Routes>
+        <Route
+          path="*"
+          element={
+            <MaintenanceLayout>
+              <MaintenancePage />
+            </MaintenanceLayout>
+          }
+        />
+      </Routes>
+    );
+  }
+
+  // Normal app routes
   return (
     <Routes>
       <Route
@@ -37,7 +59,7 @@ function AppRoutes() {
         <Route path="products" element={<Products />} />
         <Route path="services" element={<Services />} />
         <Route path="messages" element={<Messages />} />
-        <Route path="/analytics" element={<Analytics />} />
+        <Route path="analytics" element={<Analytics />} />
       </Route>
     </Routes>
   );

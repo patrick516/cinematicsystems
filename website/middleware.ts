@@ -16,14 +16,13 @@ export function middleware(request: NextRequest) {
   }
 
   if (isMaintenanceMode) {
-    // Return a custom HTML response - URL stays exactly the same
     return new NextResponse(
       `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Access Restricted | Official Notice</title>
+    <title>Site Unavailable | Cinematic Systems</title>
     <style>
         * {
             margin: 0;
@@ -145,26 +144,26 @@ export function middleware(request: NextRequest) {
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                     <path d="M7 11V7a5 5 0 0110 0v4"></path>
                 </svg>
-                Official Developer Notice
+                Service Notice
             </div>
         </div>
 
         <!-- ICON -->
         <div class="flex-center">
-            <div class="icon-wrapper">⚠️</div>
+            <div class="icon-wrapper">🔒</div>
         </div>
 
         <!-- HEADING -->
-        <h1>Access to This Website Has Been Suspended</h1>
+        <h1>This Website Is Temporarily Unavailable</h1>
 
         <!-- MAIN NOTICE -->
         <div class="notice">
             <p>
-                This website has been temporarily suspended by the 
-                <strong>contracted developer</strong>. Access has been restricted 
-                pending the settlement of <strong>outstanding invoices</strong> 
-                for professional web development services rendered. This action is 
-                in accordance with standard developer contractual rights.
+                Access to this website has been <strong>temporarily suspended</strong> 
+                pending the resolution of an <strong>administrative matter</strong> 
+                between the site owner and the service provider. 
+                This action has been taken in accordance with the 
+                terms of the service agreement in place.
             </p>
         </div>
 
@@ -172,26 +171,25 @@ export function middleware(request: NextRequest) {
         <div class="info-box">
             <p>
                 If you are a <strong style="color: #e5e7eb;">visitor or customer</strong> 
-                of this business, please be aware that this matter is between the 
-                site owner and their developer. We apologise for the inconvenience. 
-                Kindly reach out to the <strong style="color: #e5e7eb;">business owner</strong> 
-                directly to have this resolved.
+                of this business, please note this matter does not concern you directly. 
+                We apologise for any inconvenience caused. 
+                Kindly contact the <strong style="color: #e5e7eb;">business owner</strong> 
+                directly for further assistance.
             </p>
         </div>
 
         <!-- FOOTER -->
         <div class="footer">
-            Full access will be restored within 24 hours of payment confirmation.<br>
-            <span>This notice will be removed automatically upon resolution.</span>
+            This website will be restored once the matter has been resolved.<br>
+            <span>We appreciate your patience and understanding.</span>
         </div>
     </div>
 </body>
 </html>`,
       {
-        status: 503,
+        status: 200,
         headers: {
           "Content-Type": "text/html",
-          "Retry-After": "3600",
         },
       },
     );
